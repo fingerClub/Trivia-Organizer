@@ -1,37 +1,62 @@
-import pdfplumber
-path = "../../../../Downloads/1.3.24.pdf"
-with pdfplumber.open(path) as pdf:
-    dictionary0fCum = {
-        "category": [], 
-        "round": [], 
-        "question": [], 
-        "answer": []
-     }
-    page = pdf.pages[0]
-    text = page.extract_table()
-    for i in range(0, len(text)):
-        catList = []
-        row = text[i]
-        for j in range(0, len(row)):
-            if "[" in row[j] and "R" in row[j] and "Q" in row[j] and "]" in row[j] and ("Q" + "u") not in row[j]:
-                dictionary0fCum["round"].append(row[j])
-                print(row[j])
-            if row[j] != "FINAL" or row[j] != "HALF" or "TIE" or "EXTRA":
-                for x in str(j):
-                    if "?" in row[j]:
-                        dictionary0fCum["question"].append(row[j])
-                        print(row[j])
-                    elif (ord(x) < 97 and ord(x) > 32) and (ord(x + 1) < 97 and ord(x + 1) > 32):
-                        dictionary0fCum["category"].append(row[j])
-                        print(row[j])
-                        break
-                    else:
-                        dictionary0fCum["answer"].append(row[j])
-                        print(row[j])
-    print(dictionary0fCum["category"])
-                
-        
 
             
-        
+       #pdfplumber is a module used to extract pdf data
+import pdfplumber
+import re
+from strings import rules, sayings
+form = r"\[R\s+\d+\s+Q\s+\d+\]"
+#path to pdf
+path = "../../../../../Downloads/1.3.24.pdf"
+#trivia document to write on
+write = "trivia.txt"
+#opening .txt file to write
+with open(write, "w") as file:
+    #part of script, made into list to print each string as a line on .txt file for readability
+    #write script onto .txt file
+    for x in rules:
+        file.write(x + "\n")
+    #opening pdf with pdfplumber
+    with pdfplumber.open(path) as pdf:
+        #content and sayings are string dictionaries to hold categories and PDF
+        content = {
+                "category" : [],
+                "rowContent" : []
+        }
+        page = pdf.pages[0]
+        text = page.extract_table()
+        #append categories and row content in dicitonary lists, loop through each row
+        for i in range(2, len(text)):
+            row = text[i]
+            #loop through each cell in row
+            for j in range(0, len(row)):
+            #if statements decide where to append each cell in its proper list
+                #first if appends categories to "category" and also appends categories to "rowContent"
+                #so category can be also written when writing rows onto .txt file
+                #to be appended to "category", the string in the cell must be in all caps.
+                if row[j].isupper() == True and not re.match(form, row[j]) and row[j] != "TIE" and row[j] != "EXTRA":
+                    content["category"].append(row[j])
+                    content["rowContent"].append(row[j])
+                #elif checks if j loop has reached end of row, and adds a space
+                elif j == len(row) - 1:
+                    content["rowContent"] += [row[j], ""]
+                else:
+                    content["rowContent"].append(row[j])
+        jumper = 0
+        quParser = 0
+        llaves = content["rowContent"]
+        for i in range(quParser, quParser + 11):
+            words = llaves[i]
+            if words == "HALF":
+                for j in range(i, i + 4):
+                    file.write(llaves[j] + "\n")
+                    quParser += 4
+            elif words == "FINAL":
+                for x in sayings["final"]:
+                    file.write(x + "\n")
+                for j in range(i, i + 4):
+                    file.write(llaves[j] + "\n")
+                    quParser += 4
+            else:
+                file.write(words + "\n")
+                switch1 = False 
 

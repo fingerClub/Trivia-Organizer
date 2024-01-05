@@ -70,15 +70,13 @@ with open(write, "w") as file:
                             for j in range(i, i + 4):
                                 file.write(llaves[j] + "\n")
                             quParser += 4
-                            switch1 = False
                         elif words == "FINAL":
                             for x in sayings["final"]:
                                 file.write(x + "\n")
                             for j in range(i, i + 4):
                                 file.write(llaves[j] + "\n")
-                            switch1 = False
                             quParser += 4
                         else:
                             file.write(words + "\n")
-                            switch1 = False
+                    switch1 = False
                     quParser += 11
