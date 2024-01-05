@@ -32,21 +32,15 @@ okay, let's get started!
 GAMES
 TV
 GEOG
+GAMES
+[R 1 Q 1]
+What do the hippos try to "eat" in the game Hungry, Hungry Hippos?
 Marbles
 
 TV
-MOVIES
-SCIENCE
-SPORTS
+[R 1 Q 2]
+What actor/actress played twins on the Friends TV series?
+Lisa Kudrow
+(Phoebe/Ursula)
 
 GEOG
-[R 1 Q 3]
-MUSIC
-HISTORY
-ORGS
-FOOD
-[R 2 Q 1]
-What type of food are wood ear, straw and portobello?
-ANIMALS
-FINAL
-XTRA

@@ -44,10 +44,10 @@ with open(write, "w") as file:
         jumper = 0
         quParser = 0
         #loops through "category" and "rowContent"
-        while switch1 != True:
-            for key in content:
-                llaves = content[key]
-                #jumper is used to print only the three categories for each round
+        for key in content:
+            llaves = content[key]
+            #jumper is used to print only the three categories for each round
+            if switch1 == False:
                 for i in range(jumper, jumper + 3):
                     words = llaves[i]
                     #if the string is is equal to half 
@@ -55,29 +55,32 @@ with open(write, "w") as file:
                         for half in sayings["half"]:
                             file.write(half)
                             jumper += 1
+                            switch1 = True
                             break
                     elif jumper > 18:
-                        switch1 = True
                         break
                     else:
                         file.write(llaves[i] + "\n")
-                jumper += 3
-                continue
+                        switch1 = True
+                    jumper += 3
+                continue             
+            else:
                 for i in range(quParser, quParser + 11):
                     words = llaves[i]
                     if llaves[i] == "HALF":
                         for j in range(i, i + 4):
-                            file.write(llaves[j])
+                            file.write(llaves[j] + "\n")
                         quParser += 4
                         break
                     elif llaves[i] == "FINAL":
                         file.write(half)
                         for x in sayings["final"]:
-                            file.write(x)
+                            file.write(x + "\n")
                         for j in range(i, i + 4):
-                            file.write(llaves[j])
+                            file.write(llaves[j] + "\n")
                         quParser += 4
                         break
                     else:
-                        file.write(words)
+                        file.write(words + "\n")
+                        switch1 = False
                 quParser += 11
