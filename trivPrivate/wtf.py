@@ -71,7 +71,6 @@ with open(write, "w") as file:
                     else:
                         quParser += 15
                     switch1 = False
-                    print(quParser)
         rows = content["rowContent"]
         for x in range(quParser, quParser + 11):
             file.write(rows[x] + "\n")
